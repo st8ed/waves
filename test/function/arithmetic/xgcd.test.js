@@ -61,7 +61,7 @@ describe('xgcd', function() {
   });
 
   // FIXME: xgcd for negative values
-  it.skip('should calculate xgcd for edge cases with negative values', function () {
+  it('should calculate xgcd for edge cases with negative values', function () {
     assert.deepEqual([1, -2, 1], xgcd(2, 5));
     assert.deepEqual([1, -2, -1], xgcd(2, -5));
     assert.deepEqual([1, 2, 1], xgcd(-2, 5));
@@ -71,6 +71,16 @@ describe('xgcd', function() {
     assert.deepEqual([2, 1, 0], xgcd(2, -6));
     assert.deepEqual([2, -1, 0], xgcd(-2, 6));
     assert.deepEqual([2, -1, 0], xgcd(-2, -6));
+	
+	assert.deepEqual(math.bignumber([1, -2, 1]), xgcd(math.bignumber(2), math.bignumber(5)));
+    assert.deepEqual(math.bignumber([1, -2, -1]), xgcd(math.bignumber(2), math.bignumber(-5)));
+    assert.deepEqual(math.bignumber([1, 2, 1]), xgcd(math.bignumber(-2), math.bignumber(5)));
+    assert.deepEqual(math.bignumber([1, 2, -1]), xgcd(math.bignumber(-2), math.bignumber(-5)));
+
+    assert.deepEqual(math.bignumber([2, 1, 0]), xgcd(math.bignumber(2), math.bignumber(6)));
+    assert.deepEqual(math.bignumber([2, 1, 0]), xgcd(math.bignumber(2), math.bignumber(-6)));
+    assert.deepEqual(math.bignumber([2, -1, 0]), xgcd(math.bignumber(-2), math.bignumber(6)));
+    assert.deepEqual(math.bignumber([2, -1, 0]), xgcd(math.bignumber(-2), math.bignumber(-6)));
   });
 
   it('should find the greatest common divisor of booleans', function() {
