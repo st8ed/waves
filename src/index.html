@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Waves</title>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="top">
+    <div id="canvasHolder">
+        <canvas id="canvas">Your browser doesn't support canvas</canvas>
+    </div>
+</div>
+
+<div id="bottom">
+    <div id="bottomRow">
+
+        <div id="left">
+            <div id="canvasLeftHolder">
+                <canvas id="canvasLeft">Your browser doesn't support canvas</canvas>
+            </div>
+        </div>
+
+        <div id="right">
+            <div id="canvasRightHolder">
+                <canvas id="canvasRight">Your browser doesn't support canvas</canvas>
+            </div>
+        </div>
+
+        <div id="configuration">
+            <div id="configurationWrapper">
+                <div id="configurationHolder">
+                    <div class="form-group row">
+                        <div class="col-xs-10">
+                            <input
+                                    type="text"
+                                    id="timebar"
+                                    style="width: 100% !important;"
+
+                                    data-slider-step="0.001"
+
+                                    data-slider-tooltip-position="bottom"
+                                    data-slider-tooltip="always"
+                            >
+                        </div>
+
+                        <label for="timebar" class="col-xs-2 col-form-label" data-no-translate="true">
+                            <button id="playButton" class="btn btn-default btn-sm">
+                                <span class="glyphicon glyphicon-play" aria-hidden="true" aria-label="Play"></span>
+                            </button>
+                            <button id="pauseButton" class="btn btn-default btn-sm">
+                                <span class="glyphicon glyphicon-pause" aria-hidden="true" aria-label="Pause"></span>
+                            </button>
+                        </label>
+                    </div>
+
+                    <div class="row">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#presets">Presets</a></li>
+                            <li><a data-toggle="tab" href="#options">Options</a></li>
+                            <li><a data-toggle="tab" href="#data">Data</a></li>
+                            <li><a data-toggle="modal" data-target="#about" href="">About</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="presets" class="tab-pane fade in active">
+                                <div class="panel-group" id="presets-accordion">
+                                </div>
+                                <h4>Add new preset</h4>
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label for="newPresetName">Name:</label>
+                                        <input type="text" class="form-control" id="newPresetName"
+                                               placeholder="Type here">
+                                    </div>
+                                    <button class="btn btn-primary btn-sm" id="newPresetAdd" data-toggle="tooltip"
+                                            title="Add a preset from current configuration">
+                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"
+                                              aria-label="Add"></span>
+                                    </button>
+                                    <button class="btn btn-primary btn-sm" id="importPresets" data-toggle="tooltip"
+                                            title="Import from a file">
+                                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"
+                                          aria-label="Import"></span>
+                                    </button>
+                                    <button class="btn btn-primary btn-sm" id="exportPresets" data-toggle="tooltip"
+                                            title="Export to a file">
+                                    <span class="glyphicon glyphicon-download-alt" aria-hidden="true"
+                                          aria-label="Export"></span>
+                                    </button>
+                                    <button class="btn btn-primary btn-sm" id="exportPresetsAsText"
+                                            data-toggle="tooltip"
+                                            title="Export as text">
+                                    <span class="glyphicon glyphicon-barcode" aria-hidden="true"
+                                          aria-label="Export as text"></span>
+                                    </button>
+                                    <input type="file" id="configFile" style="display:none">
+                                </form>
+                            </div>
+
+                            <div id="options" class="tab-pane fade">
+                                <form class="form-horizontal">
+                                    <h4>Time axis:</h4>
+
+                                    <div class="form-group">
+                                        <label for="timeFactor" class="col-sm-4 control-label">Factor:</label>
+
+                                        <div class="col-sm-8">
+                                            <input
+                                                    type="text"
+                                                    id="timeFactor"
+                                                    data-provide="slider"
+                                                    data-slider-min="0.125"
+                                                    data-slider-max="7"
+                                                    data-slider-step="0.125"
+                                                    data-slider-value="1"
+                                            >
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="timeInterval" class="col-sm-4 control-label">Interval:</label>
+
+                                        <div class="col-sm-8">
+                                            <input
+                                                    type="text"
+                                                    id="timeInterval"
+                                                    data-provide="slider"
+
+                                                    data-slider-min="0"
+                                                    data-slider-max="60"
+                                                    data-slider-step="1"
+                                                    data-slider-value="[0, 10]"
+
+                                                    data-slider-tooltip-position="bottom"
+                                            >
+                                        </div>
+                                    </div>
+
+                                </form>
+                                <div id="modelOptions">
+                                </div>
+                            </div>
+
+                            <div id="data" class="tab-pane fade">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="aboutDialogLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="aboutDialogLabel">About</h4>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#about-home">Annotation</a></li>
+                    <li><a data-toggle="tab" href="#changeLanguage" data-no-translate="true">Languages</a></li>
+                    <li><a data-toggle="tab" href="#license">License</a></li>
+                    <li><a data-toggle="tab" href="#software">Third-party</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="about-home" class="tab-pane fade in active">
+                    </div>
+                    <div id="changeLanguage" class="tab-pane fade">
+                        <h3 data-no-translate="true">Change language</h3>
+                        <p data-no-translate="true">
+                            <select id="changeLanguageInput" data-no-translate="true">
+                                <option value="leave">Select...</option>
+                                <option value="en">English</option>
+                                <option value="ru">Russian</option>
+                            </select>
+                        </p>
+                    </div>
+                    <div id="license" class="tab-pane fade">
+                    </div>
+                    <div id="software" class="tab-pane fade">
+                        <h5>The following third-party software was used:</h5>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>License</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><a href="http://getbootstrap.com/">Bootstrap</a></td>
+                                <td>Front-end framework</td>
+                                <td><a href="https://github.com/twbs/bootstrap/blob/master/LICENSE">MIT</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://jquery.com/">jQuery</a></td>
+                                <td>Feature-rich JavaScript library</td>
+                                <td><a href="https://jquery.org/license/">MIT</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://seiyria.com/bootstrap-slider/">bootstrap-slider</a></td>
+                                <td>Nice-looking slider for Bootstrap</td>
+                                <td><a href="https://github.com/seiyria/bootstrap-slider/blob/master/LICENSE.md">MIT</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://bootstrap-notify.remabledesigns.com/">Bootstrap Notify</a></td>
+                                <td>Notifications</td>
+                                <td><a href="https://github.com/mouse0270/bootstrap-notify/blob/master/LICENSE">MIT</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://mathjs.org/">Mathjs</a></td>
+                                <td>Math library for JavaScript</td>
+                                <td><a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="http://borischumichev.github.io/everpolate/">Everpolate</a></td>
+                                <td>JavaScript numerical interpolation library</td>
+                                <td><a href="https://github.com/BorisChumichev/everpolate/blob/master/LICENSE">MIT</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://github.com/lvandeve/jmat">Jmat.js</a></td>
+                                <td>Complex special functions, numerical linear algebra and statistics in JavaScript
+                                </td>
+                                <td><a href="https://github.com/lvandeve/jmat/blob/master/LICENSE">LICENSE</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://github.com/davidmerfield/randomColor">randomColor</a></td>
+                                <td>A tiny script for generating attractive colors</td>
+                                <td><a href="https://github.com/davidmerfield/randomColor/blob/master/LICENSE.md">CC0
+                                    1.0</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://github.com/mindmup/editable-table">mindmup-editabletable</a></td>
+                                <td>Tiny jQuery/Bootstrap widget that makes a HTML table editable</td>
+                                <td><a href="https://github.com/mindmup/editable-table/blob/master/LICENSE">MIT</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://github.com/jeremydurham/persist-js">Persist-js</a></td>
+                                <td>JavaScript client-side persistent storage library</td>
+                                <td><a href="https://github.com/jeremydurham/persist-js/blob/master/COPYING">LICENSE</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://github.com/rndme/download">Downloadjs</a></td>
+                                <td>The download() function is used to trigger a file download from JavaScript.</td>
+                                <td><a href="https://github.com/rndme/download/blob/master/LICENSE.md">MIT</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://github.com/i18next/i18next">i18n</a></td>
+                                <td>Internationalization framework</td>
+                                <td><a href="https://github.com/i18next/i18next/blob/master/LICENSE">MIT</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exportAsTextDialog" tabindex="-1" role="dialog" aria-labelledby="exportAsTextDialogLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exportAsTextDialogLabel">Export as text</h4>
+            </div>
+            <div class="modal-body">
+                <p data-no-translate="true">Для сохранения в режиме совместимости со старыми браузерами выполните
+                    следующую последовательность действий: </p>
+                <uL>
+                    <li>Выделите <b>весь</b> текст ниже (Ctrl+A)</li>
+                    <li>Скопируйте его в буфер обмена (Ctrl+C)</li>
+                    <li>Сохраните вставкой (Ctrl+V) в виде текстового документа с помощью приложения <b>"Блокнот
+                        (Notepad)"</b> или иного элементарного текстового редактора.
+                    </li>
+                    <li>Расширение файла рекомендуется выбрать json, кодировка - UTF-8</li>
+                    <li>Microsoft Word добавляет в файл свои мета-данные и поэтому не может быть использован для этой
+                        цели.
+                    </li>
+                </uL>
+
+                <textarea id="exportAsTextData" style="width: 100%; height: 100%;" rows="7"
+                          readonly></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../build/bundle.js"></script>
+</body>
+</html>

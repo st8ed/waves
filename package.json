@@ -1,0 +1,65 @@
+{
+  "name": "waves",
+  "version": "2017.1.1",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "bootstrap-notify": "^3.1.3",
+    "bootstrap-slider": "^9.1.3",
+    "downloadjs": "^1.4.7",
+    "es5-shim": "^4.5.9",
+    "everpolate": "0.0.3",
+    "fft-js": "0.0.11",
+    "i18next": "^7.0.0",
+    "jquery": "^3.1.0",
+    "persist-js": "^0.3.1",
+    "randomcolor": "^0.4.4"
+  },
+  "devDependencies": {
+    "browser-unpack": "^1.1.1",
+    "browserify": "^14.0.0",
+    "browserify-shim": "^3.8.12",
+    "inliner": "^1.9.5",
+    "intreq": "0.0.0",
+    "uglifyjs": "^2.4.10",
+    "package-json-versionify": "^1.0.4",
+    "watchify": "^3.7.0"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim",
+      "package-json-versionify"
+    ]
+  },
+  "browser": {
+    "mathjs": "./src/js/3rdparty/mathjs/dist/math.min.js",
+    "w3color": "./src/js/3rdparty/w3color.js",
+    "mindmup-editabletable": "./src/js/3rdparty/mindmup-editabletable.js",
+    "jmat-real": "./src/js/3rdparty/jmat/jmat_real.js",
+    "jmat-complex": "./src/js/3rdparty/jmat/jmat_complex.js"
+  },
+  "browserify-shim": {
+    "w3color": "w3color",
+    "mindmup-editabletable": {
+      "depends": [
+        "jquery:$"
+      ]
+    },
+    "jmat-real": "Jmat",
+    "jmat-complex": {
+      "depends": [
+        "jmat-real:Jmat"
+      ]
+    }
+  },
+  "scripts": {
+    "build-js": "browserify src/js/main.js -o build/bundle-raw.js",
+    "clean-js": "cat build/bundle-raw.js | browser-unpack | intreq | browser-pack > build/bundle-clean.js",
+    "compress-js": "uglifyjs build/bundle-clean.js -mc --source-map=build/bundle.js.map --screw-ie8 --stats -o build/bundle.js",
+    "mrproper": "rm -vf build/* && rm -vf dist/waves.html",
+    "build": "npm run mrproper && npm run build-js && npm run clean-js && npm run compress-js && node inline.js > dist/waves.html",
+    "watch-js": "watchify src/js/main.js -o build/bundle.js -dv",
+    "watch": "npm run watch-js",
+    "test": "echo \"Error: no tests yet\""
+  }
+}
