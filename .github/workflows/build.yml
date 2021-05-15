@@ -1,0 +1,21 @@
+on:
+  push:
+    tags:        
+      - v*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+
+      - run: make build
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: build/waves.html

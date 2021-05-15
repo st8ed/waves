@@ -1,6 +1,5 @@
 .idea
 node_modules
-build/*
+/build/*
 
-yarn.lock
 yarn-error.log

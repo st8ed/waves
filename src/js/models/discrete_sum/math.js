@@ -1,8 +1,8 @@
-//var mathCore = require('mathjs/core'),
-//    math     = mathCore.create();
+var mathCore = require('mathjs/core'),
+   math     = mathCore.create();
 
-//math.import(require('mathjs/lib')); // We need constants.js in 'lib', so import everything
-var math = require('mathjs');
+math.import(require('mathjs/lib')); // We need constants.js in 'lib', so import everything
+// var math = require('mathjs');
 math.config({number: 'BigNumber', precision: 600});
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////

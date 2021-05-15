@@ -1,6 +1,6 @@
 {
   "name": "waves",
-  "version": "2017.1.1",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "bootstrap": "^3.3.7",
@@ -12,6 +12,7 @@
     "fft-js": "0.0.11",
     "i18next": "^7.0.0",
     "jquery": "^3.1.0",
+    "mathjs": "file:./src/js/3rdparty/mathjs",
     "persist-js": "^0.3.1",
     "randomcolor": "^0.4.4"
   },
@@ -32,7 +33,6 @@
     ]
   },
   "browser": {
-    "mathjs": "./src/js/3rdparty/mathjs/dist/math.min.js",
     "w3color": "./src/js/3rdparty/w3color.js",
     "mindmup-editabletable": "./src/js/3rdparty/mindmup-editabletable.js",
     "jmat-real": "./src/js/3rdparty/jmat/jmat_real.js",
@@ -51,15 +51,5 @@
         "jmat-real:Jmat"
       ]
     }
-  },
-  "scripts": {
-    "build-js": "browserify src/js/main.js -o build/bundle-raw.js",
-    "clean-js": "cat build/bundle-raw.js | browser-unpack | intreq | browser-pack > build/bundle-clean.js",
-    "compress-js": "uglifyjs build/bundle-clean.js -mc --source-map=build/bundle.js.map --screw-ie8 --stats -o build/bundle.js",
-    "mrproper": "rm -vf build/* && rm -vf dist/waves.html",
-    "build": "npm run mrproper && npm run build-js && npm run clean-js && npm run compress-js && node inline.js > dist/waves.html",
-    "watch-js": "watchify src/js/main.js -o build/bundle.js -dv",
-    "watch": "npm run watch-js",
-    "test": "echo \"Error: no tests yet\""
   }
 }

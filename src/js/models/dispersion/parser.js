@@ -1,10 +1,10 @@
-//var mathCore = require('mathjs/core'),
-//    math     = mathCore.create();
-var math = require('mathjs');
+var mathCore = require('mathjs/core'),
+   math     = mathCore.create();
+// var math = require('mathjs');
 
-//math.import(require('mathjs/lib/function'));
-//math.import(require('mathjs/lib/type/number'));
-//math.import(require('mathjs/lib/expression'));
+math.import(require('mathjs/lib/function'));
+math.import(require('mathjs/lib/type/number'));
+math.import(require('mathjs/lib/expression'));
 var parser = math.parser();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////

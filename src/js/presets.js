@@ -74,6 +74,9 @@ module.exports.import = function(version, data) {
                 case '2016.2.3':
                     console.log('Converting from version 2016.2.3');
 
+                case '2017.1.1':
+                    console.log('Converting from version 2017.1.1');
+
                 case main.VERSION:
                     presets = JSON.parse(data);
                     ok = true;
