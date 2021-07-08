@@ -18,13 +18,13 @@
   },
   "devDependencies": {
     "browser-unpack": "^1.1.1",
-    "browserify": "^14.0.0",
+    "browserify": "^17.0.0",
     "browserify-shim": "^3.8.12",
     "inliner": "^1.9.5",
     "intreq": "0.0.0",
-    "uglifyjs": "^2.4.10",
     "package-json-versionify": "^1.0.4",
-    "watchify": "^3.7.0"
+    "uglifyjs": "^2.4.10",
+    "watchify": "^4.0.0"
   },
   "browserify": {
     "transform": [
